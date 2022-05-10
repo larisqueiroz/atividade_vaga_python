@@ -14,7 +14,14 @@ class Objeto_Tipo(models.Model): # TODO: verificar o tipo do id!!!!!!
     def __str__(self):
         return self.tipo_de_objeto
 
+class Objeto(models.Model):
+    objeto_tipo_id = models.ForeignKey(Objeto_Tipo, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.objeto_tipo_id
+
 class Arma(models.Model):
+    id = models.OneToOneField(Objeto,on_delete=models.DO_NOTHING,primary_key=True)
     calibre_id = models.ForeignKey(Calibre, on_delete=models.DO_NOTHING)
     marca = models.CharField(max_length=64)
     modelo = models.CharField(max_length=64)
@@ -26,6 +33,7 @@ class Arma(models.Model):
         return self.modelo
 
 class Municao(models.Model):
+    id = models.OneToOneField(Objeto,on_delete=models.DO_NOTHING,primary_key=True)
     calibre_id = models.ForeignKey(Calibre, on_delete=models.DO_NOTHING)
     marca = models.CharField(max_length=64)
     modelo = models.CharField(max_length=64)
@@ -34,8 +42,4 @@ class Municao(models.Model):
     def __str__(self):
         return self.modelo
 
-class Objeto(models.Model):
-    objeto_tipo_id = models.SmallIntegerField()
 
-    def __str__(self):
-        return self.objeto_tipo_id
