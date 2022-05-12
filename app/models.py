@@ -21,8 +21,9 @@ class Objeto(models.Model):
         return self.objeto_tipo_id
 
 class Arma(models.Model):
-    id = models.OneToOneField(Objeto,on_delete=models.DO_NOTHING,primary_key=True)
+    id = models.OneToOneField(Objeto,on_delete=models.DO_NOTHING,primary_key=True, blank=True)
     calibre_id = models.ForeignKey(Calibre, on_delete=models.DO_NOTHING)
+    # calibre = models.CharField(max_length=64, blank=True) # R=TODO tirar esse blank
     marca = models.CharField(max_length=64)
     modelo = models.CharField(max_length=64)
     quantidade_de_tiros = models.IntegerField()
@@ -35,6 +36,7 @@ class Arma(models.Model):
 class Municao(models.Model):
     id = models.OneToOneField(Objeto,on_delete=models.DO_NOTHING,primary_key=True)
     calibre_id = models.ForeignKey(Calibre, on_delete=models.DO_NOTHING)
+    # calibre = models.CharField(max_length=64)
     marca = models.CharField(max_length=64)
     modelo = models.CharField(max_length=64)
     valor_estimado = models.DecimalField(decimal_places=2,max_digits=10)
