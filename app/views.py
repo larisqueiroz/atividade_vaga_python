@@ -42,10 +42,10 @@ def ver_dados_armazenados(request):
         print(f'objeto tipo {tipo} salvo com a id referente a arma que é {tipo_atual_id}')
 
         if tipo == 'arma':
-            arma_obj = Arma.objects.create(id_id=tipo_atual_id,marca=request.data['marca'],
+            arma_obj = Arma.objects.create(arma_id=tipo_atual_id,marca=request.data['marca'],
             modelo=request.data['modelo'],quantidade_de_tiros=request.data['quantidade_de_tiros'],
             valor_estimado=request.data['valor_estimado'],imagem=request.data['imagem'],
-            calibre_id_id=calibre)
+            calibre_id=calibre)
             print(arma_obj)
             
             arma_obj.save()
