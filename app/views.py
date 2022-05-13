@@ -12,7 +12,7 @@ def index(request):
     return render(request, 'app/index.html')
 
 @api_view(['GET', 'POST'])
-def ver_dados_armazenados(request):
+def ler_e_gravar_dados(request):
     if request.method == 'GET':
         arma_view = Arma.objects.all()
         municao_view = Municao.objects.all()
@@ -30,33 +30,29 @@ def ver_dados_armazenados(request):
         if "quantidade_de_tiros" in content or "imagem" in content:
             serializer = ArmaSerializer(data=request.data)
             tipo = 'arma'
-            # id_tipo = Objeto_Tipo.objects.filter(tipo_de_objeto=tipo).get()
             
         else:
             serializer = MunicaoSerializer(data=request.data)
             tipo = 'munição'
-            # id_tipo = Objeto_Tipo.objects.filter(tipo_de_objeto=tipo).get()
+
         calibre = Calibre.objects.get(desc_calibre=request.data['calibre']).id
-        print(calibre)
-        print(tipo)
         tipo_atual_id = Objeto_Tipo.objects.get(tipo_de_objeto=tipo).id
-        print(f'ID DO TIPO ARMA É IGUAL A 3: {tipo_atual_id}')
         objeto = Objeto.objects.create(objeto_tipo_id=tipo_atual_id)
         objeto.save()
-        print(f'objeto tipo {tipo} salvo com a id referente a arma que é {tipo_atual_id}')
+        print(f'objeto tipo {tipo} salvo com a id referente a {tipo} que é {tipo_atual_id}')
 
         if tipo == 'arma':
-            arma_obj = Arma.objects.create(id_id=tipo_atual_id,marca=request.data['marca'],
+            arma_obj = Arma.objects.create(id_obj_id=tipo_atual_id,marca=request.data['marca'],
             modelo=request.data['modelo'],quantidade_de_tiros=request.data['quantidade_de_tiros'],
             valor_estimado=request.data['valor_estimado'],imagem=request.data['imagem'],
-            calibre_id=calibre)
+            calibre_id_id=calibre)
             print(arma_obj)
             
             arma_obj.save()
             serializer = ArmaSerializer(data=arma_obj)
             print('salvou arma')
         else:
-            municao = Municao.objects.create(municao_id=tipo_atual_id,marca=request.data['marca'],
+            municao = Municao.objects.create(id_obj_id=tipo_atual_id,marca=request.data['marca'],
             modelo=request.data['modelo'],
             valor_estimado=request.data['valor_estimado'],calibre_id_id=calibre)
             municao.save()
@@ -68,12 +64,3 @@ def ver_dados_armazenados(request):
             return Response(dict(serializer.data), status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['DELETE', 'GET'])
-def delete(request, pk):
-    valor_obj = Objeto.objects.get(id=pk)
-    valor_obj.delete()
-
-    # valor_arma= Arma.objects.get(id=pk)
-    # valor_arma.delete()
-
-    return Response('Apagado')
