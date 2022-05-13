@@ -15,13 +15,13 @@ class Objeto_Tipo(models.Model): # TODO: verificar o tipo do id!!!!!!
         return self.tipo_de_objeto
 
 class Objeto(models.Model):
-    objeto_tipo_id = models.ForeignKey(Objeto_Tipo, on_delete=models.CASCADE)
+    objeto_tipo = models.ForeignKey(Objeto_Tipo, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.objeto_tipo_id
 
 class Arma(models.Model):
-    arma = models.OneToOneField(Objeto,on_delete=models.CASCADE,primary_key=True)
+    id = models.OneToOneField(Objeto,on_delete=models.CASCADE,primary_key=True)
     calibre = models.ForeignKey(Calibre, on_delete=models.CASCADE)
     # calibre = models.CharField(max_length=64, blank=True) # R=TODO tirar esse blank
     marca = models.CharField(max_length=64)
@@ -34,7 +34,7 @@ class Arma(models.Model):
         return self.modelo
 
 class Municao(models.Model):
-    id = models.OneToOneField(Objeto,on_delete=models.CASCADE,primary_key=True)
+    municao = models.OneToOneField(Objeto,on_delete=models.CASCADE,primary_key=True)
     calibre_id = models.ForeignKey(Calibre, on_delete=models.CASCADE)
     # calibre = models.CharField(max_length=64)
     marca = models.CharField(max_length=64)
