@@ -19,6 +19,9 @@ pip install -r requirements.txt
 login: admin_2
 senha: admin
 
+4. Endpoint
+http://localhost:8000/index
+
 ## Resolução e dificuldades enfrentadas
 <img src="assets/diagramas.png" width="1143" height= "532" title="diagramas">
 
